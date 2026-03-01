@@ -76,3 +76,5 @@ public class CharacterCounter {
         return count;
     }
 }
+
+// Danielle Changes made
