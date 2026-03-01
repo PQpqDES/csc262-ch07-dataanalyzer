@@ -14,16 +14,18 @@ public class CharacterCounter {
         File file = new File(fileName);
 
         try {
+
             int characters = countCharacters(file);
             int words = countWords(file);
             int lines = countLines(file);
 
+            System.out.println("\n----- File Statistics -----");
             System.out.println("Characters: " + characters);
             System.out.println("Words: " + words);
             System.out.println("Lines: " + lines);
 
         } catch (FileNotFoundException e) {
-            System.out.println("File not found.");
+            System.out.println("Error: File not found.");
         }
 
         keyboard.close();
@@ -31,43 +33,46 @@ public class CharacterCounter {
 
     public static int countCharacters(File file) throws FileNotFoundException {
 
-        Scanner input = new Scanner(file);
         int count = 0;
 
-        while (input.hasNextLine()) {
-            String line = input.nextLine();
-            count = count + line.length();
+        try (Scanner input = new Scanner(file)) {
+
+            while (input.hasNextLine()) {
+                String line = input.nextLine();
+                count += line.length();
+            }
         }
 
-        input.close();
         return count;
     }
 
     public static int countWords(File file) throws FileNotFoundException {
 
-        Scanner input = new Scanner(file);
         int count = 0;
 
-        while (input.hasNext()) {
-            input.next();
-            count = count + 1;
+        try (Scanner input = new Scanner(file)) {
+
+            while (input.hasNext()) {
+                input.next();
+                count++;
+            }
         }
 
-        input.close();
         return count;
     }
 
     public static int countLines(File file) throws FileNotFoundException {
 
-        Scanner input = new Scanner(file);
         int count = 0;
 
-        while (input.hasNextLine()) {
-            input.nextLine();
-            count = count + 1;
+        try (Scanner input = new Scanner(file)) {
+
+            while (input.hasNextLine()) {
+                input.nextLine();
+                count++;
+            }
         }
 
-        input.close();
         return count;
     }
 }
