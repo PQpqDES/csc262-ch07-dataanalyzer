@@ -11,7 +11,11 @@ public class DataAnalyzer
 {
     public static void main(String[] args)
     {
-        Scanner in = new Scanner(System.in);
+        Scanner keyboard = new Scanner(System.in); // SAFE just a name change
+
+        System.out.println("DataAnalyzer");
+        System.out.println("File format: first value = count (integer), then that many numbers.");
+        System.out.println();
 
         boolean done = false;
         while (!done)
@@ -31,11 +35,11 @@ public class DataAnalyzer
             }
             catch (FileNotFoundException exception)
             {
-                System.out.println("File not found.");
+                System.out.println("File not found. Please try again.\n");
             }
-            catch (NoSuchElementException exception)
+            catch (NoSuchElementException IOException exception) //safe combined
             {
-                System.out.println("File contents invalid.");
+                System.out.println("File contents invalid. Please check the file and try again.\n");
             }
             catch (IOException exception)
             {
@@ -67,6 +71,12 @@ public class DataAnalyzer
         {
             // wrong type like "five" instead of 5
             throw new NoSuchElementException("Count is not an integer.");
+        }
+
+        // guardrail
+        if (numberOfValues <= 0)
+        {
+            throw new IOException("Count must be a positive integer.");
         }
 
         double[] data = new double[numberOfValues];
